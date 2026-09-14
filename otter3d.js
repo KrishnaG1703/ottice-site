@@ -117,8 +117,9 @@ if (renderer) {
   let pitch = 0;
   frameFn = (dt, time) => {
     // idle sway, leaning a little toward the cursor
-    const idle = reduceMotion ? 0 : Math.sin(time * 0.6) * 0.55;
-    const wantYaw = idle + lookX * 0.35;
+    // keep it mostly front-facing: the sculpt reads best from the front
+    const idle = reduceMotion ? 0 : Math.sin(time * 0.6) * 0.3;
+    const wantYaw = idle + lookX * 0.22;
     const wantPitch = lookY * 0.12;
     yaw += (wantYaw - yaw) * ease(dt, 2.4);
     pitch += (wantPitch - pitch) * ease(dt, 3);
