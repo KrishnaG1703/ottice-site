@@ -335,12 +335,12 @@
       <div class="wrap">
         <header class="section-head">
           <p class="eyebrow">where it's been tested</p>
-          <h2 id="tested-title">seven key pages. every key picked correctly.</h2>
+          <h2 id="tested-title">ten providers. every key picked correctly.</h2>
           <p class="section-sub">for each one, otter had to spot a brand-new key, save it, fill back the exact same value on that site, and refuse a lookalike address.</p>
         </header>
         <div class="tested-score">
-          <span><b>36 / 36</b> checks passed</span>
-          <span><b>0</b> false alarms on commit hashes, uuids and public keys</span>
+          <span><b>56 / 56</b> checks passed</span>
+          <span><b>0</b> false alarms on commit hashes, uuids, build ids and public keys</span>
         </div>
         <ul class="tested-grid">
           <li class="tested-tile">
@@ -407,6 +407,36 @@
             <div class="tested-top"><b>hugging face</b><span class="tag-lite">lab</span></div>
             <small class="keepcase">huggingface.co</small>
             <code class="keepcase">hf_…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>vercel</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">vercel.com</small>
+            <code class="keepcase">24-char token</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>cloudflare</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">dash.cloudflare.com</small>
+            <code class="keepcase">api token</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>supabase</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">supabase.com</small>
+            <code class="keepcase">sb_secret_… · sbp_…</code>
             <ul class="tested-checks" aria-label="checks passed">
               <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
               <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
