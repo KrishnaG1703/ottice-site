@@ -117,6 +117,7 @@
       <nav aria-label="primary">
         <a href="#how">how it works</a>
         <a href="#security">security</a>
+        <a href="#tested">tested</a>
         <a href="#faq">faq</a>
       </nav>
       <a class="btn btn-sm btn-primary" href="#demo">try the demo</a>
@@ -326,6 +327,94 @@
           </div>
           <a class="link" href="https://krishnag1703.github.io/ottice-privacy/">privacy policy <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+      </div>
+    </section>
+
+    <!-- where otter has been tested -->
+    <section class="tested" id="tested" aria-labelledby="tested-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="eyebrow">where it's been tested</p>
+          <h2 id="tested-title">seven key pages. every key picked correctly.</h2>
+          <p class="section-sub">for each one, otter had to spot a brand-new key, save it, fill back the exact same value on that site, and refuse a lookalike address.</p>
+        </header>
+        <div class="tested-score">
+          <span><b>36 / 36</b> checks passed</span>
+          <span><b>0</b> false alarms on commit hashes, uuids and public keys</span>
+        </div>
+        <ul class="tested-grid">
+          <li class="tested-tile">
+            <div class="tested-top"><b>openai</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">platform.openai.com</small>
+            <code class="keepcase">sk-proj-…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>anthropic</b><span class="tag-lite is-live">lab + live</span></div>
+            <small class="keepcase">console.anthropic.com</small>
+            <code class="keepcase">sk-ant-api03-…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>google ai studio</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">aistudio.google.com</small>
+            <code class="keepcase">AIza…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>aws iam</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">console.aws.amazon.com</small>
+            <code class="keepcase">secret access key</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>stripe</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">dashboard.stripe.com</small>
+            <code class="keepcase">sk_live_…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>github</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">github.com</small>
+            <code class="keepcase">github_pat_…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+          <li class="tested-tile">
+            <div class="tested-top"><b>hugging face</b><span class="tag-lite">lab</span></div>
+            <small class="keepcase">huggingface.co</small>
+            <code class="keepcase">hf_…</code>
+            <ul class="tested-checks" aria-label="checks passed">
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>caught</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact fill</li>
+              <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>lookalike refused</li>
+            </ul>
+          </li>
+        </ul>
+        <p class="tested-note"><b>how we test:</b> "lab" means a stand-in key page served on the provider's real web address, with random keys in the real format, run in chrome with the extension. "live" means we also checked it on the real console with a real throwaway key. live checks for the rest are in progress.</p>
       </div>
     </section>
 
