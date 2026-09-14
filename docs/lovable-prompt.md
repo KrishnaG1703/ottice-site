@@ -3,6 +3,7 @@
 Paste everything below the line into Lovable. Before sending, upload these files from `ottice-site/assets/` so Lovable can use them:
 
 - `icon.png` (app icon)
+- `otter3d/otter.glb` (3D otter sculpt for the hero) and `otter3d/otter-real.webp` (the finished otter render it reveals)
 - `otter/idle.webm`, `otter/scan.webm`, `otter/wave.webm`, `otter/celebrate.webm` (animated otter, transparent background)
 - `otter/*.webp` (still poses: idle, scan, wave, celebrate, pout, salute, laugh, lean)
 - `fonts/Lumiare.otf` (display font)
@@ -42,10 +43,12 @@ Left column:
 - Buttons: mint "get otter →" and outlined "watch how it works" (scrolls to the demo)
 - Three small mint-check items: "no silent capture", "exact-site match", "no telemetry"
 
-Right column: a dark browser-window mockup (three grey dots, URL pill with a lock showing `acme.dev/sign-in`) containing a fake sign-in form: a small blue "acme" logo, "welcome back", "sign in to continue", an email field showing `you@example.com`, a focused mint-outlined password field with dots and a blinking caret, and a blue "continue" button.
-- Overlapping the bottom-right corner, the **extension prompt**: a light paper card with the app icon, "i spotted a password." / "want me to keep it safe?", and two buttons "keep it safe" (pale mint) and "not now" (text). These buttons work: "keep it safe" → "safe and sound." / "saved only for acme.dev, encrypted on this device." with a "done" button; "not now" → "no problem." / "nothing was saved. i'll ask again next time." with "ask me again". "done" / "ask me again" restore the original prompt.
-- The **otter** stands beside the window's left edge playing the `wave` clip. When the prompt changes, the otter switches: saved → `celebrate`, not now → `lean` pose, back → `wave`.
-- Behind the right column, a subtle teal/mint radial glow.
+Right column: a **3D otter stage** (5:6 aspect, max 640px tall, 32px radius, a soft teal/mint radial glow behind it, no border).
+- Render `otter.glb` with three.js (React Three Fiber is fine). The model has positions only, no normals, UVs or materials: weld vertices (`mergeVertices`), recompute normals, and give it a warm clay `MeshPhysicalMaterial` (color `#c97a3e`, roughness 0.62, sheen 1 with sheen color `#ffc38a`). Lights: warm hemisphere, warm key light from front-right, mint rim light from behind-left, faint cyan fill. ACES tone mapping, transparent canvas. Fit the model to about 2 units tall, centered.
+- Idle: the otter sways left/right (about ±30°) and bobs slightly, and leans a little toward the cursor.
+- **Hover reveal:** on pointer enter, the model turns to face the camera while the finished render `otter-real.webp` (the fluffy photoreal otter, transparent background, same framing) grows out of the cursor position as a soft-edged expanding circle (CSS `mask-image: radial-gradient(circle at x y, black r-8%, transparent r)` with `r` eased from 0% to 160%). The 3D canvas fades to 12% opacity behind it. On pointer leave the circle shrinks back toward where the cursor left. Keyboard focus and Enter/Space also reveal (from the center); on touch devices a tap toggles it.
+- A small pill at the top center of the stage with a pulsing mint dot says "hover to meet the real otter" ("tap to meet the real otter" on touch); it fades out while revealed. Show a small spinner until the model loads. If WebGL or the model fails, just show the still render.
+- Overlapping the stage's bottom-right edge, the **extension prompt**: a light paper card with the app icon, "i spotted a password." / "want me to keep it safe?", and two buttons "keep it safe" (pale mint) and "not now" (text). These buttons work: "keep it safe" → "safe and sound." / "saved only for acme.dev, encrypted on this device." with a "done" button; "not now" → "no problem." / "nothing was saved. i'll ask again next time." with "ask me again". "done" / "ask me again" restore the original prompt. On phones the prompt sits below the stage instead.
 
 ### 3. Statement band (alternate background, borders top and bottom)
 - Eyebrow (mint, small, letter-spaced): "the idea is simple"

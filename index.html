@@ -66,24 +66,16 @@
           </ul>
         </div>
 
-        <div class="hero-demo" aria-label="interactive example: otter offers to save a password">
-          <div class="otter hero-otter" data-clip="wave" aria-hidden="true"></div>
-          <div class="window">
-            <div class="window-bar">
-              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="url keepcase"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>acme.dev/sign-in</span>
-            </div>
-            <div class="signin">
-              <div class="acme" aria-hidden="true"><span></span>acme</div>
-              <h2 class="signin-title">welcome back</h2>
-              <p class="signin-sub">sign in to continue</p>
-              <div class="field"><span class="field-label">email</span><span class="field-input keepcase">you@example.com</span></div>
-              <div class="field"><span class="field-label">password</span><span class="field-input field-focus" aria-label="password field, filled">••••••••••••<i class="caret" aria-hidden="true"></i></span></div>
-              <span class="signin-btn" aria-hidden="true">continue</span>
-            </div>
+        <div class="hero-stage">
+          <div class="otter-stage" id="otter-stage" tabindex="0" role="img"
+               aria-label="a 3d otter model. hover, focus or tap it to reveal the finished otter.">
+            <canvas class="otter-canvas" id="otter-canvas" aria-hidden="true"></canvas>
+            <img class="otter-real" id="otter-real" src="assets/otter3d/otter-real.webp" alt="" width="900" height="1080" decoding="async">
+            <div class="otter-loading" id="otter-loading" aria-hidden="true"><span></span></div>
+            <p class="otter-hint" id="otter-hint" aria-hidden="true"><span class="hint-dot"></span><span class="hint-text">hover to meet the real otter</span></p>
           </div>
 
-          <div class="prompt" id="hero-prompt" role="status" aria-live="polite">
+          <div class="prompt hero-prompt" id="hero-prompt" role="status" aria-live="polite">
             <div class="prompt-head">
               <img src="assets/icon.png" alt="" width="30" height="30">
               <div>
@@ -326,6 +318,8 @@
     </div>
   </footer>
 
+  <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js" } }</script>
   <script src="main.js" defer></script>
+  <script type="module" src="otter3d.js"></script>
 </body>
 </html>

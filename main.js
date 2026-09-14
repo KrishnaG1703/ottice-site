@@ -60,11 +60,8 @@
     heroPrompt.classList.add('is-updating');
   }
 
-  const heroOtter = document.querySelector('.hero-otter');
-  setOtter(heroOtter, 'wave');
   heroActions.addEventListener('click', event => {
     const action = event.target.closest('[data-hero]')?.dataset.hero;
-    setOtter(heroOtter, { save: 'celebrate', skip: 'lean', reset: 'wave' }[action] || 'wave');
     if (action === 'save') {
       setHero('safe and sound.', 'saved only for acme.dev, encrypted on this device.', [{ label: 'done', action: 'reset' }]);
     } else if (action === 'skip') {
