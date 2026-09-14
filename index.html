@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>otter vault — the otter who keeps a secret</title>
-  <meta name="description" content="Otter Vault is a small browser companion that notices passwords and API keys, asks first, then keeps them in an encrypted notebook on your device.">
-  <meta name="theme-color" content="#05090b">
+  <title>otter vault — your passwords and api keys, kept close</title>
+  <meta name="description" content="Otter asks before saving your credentials to an encrypted browser vault, then helps fill them on the matching site.">
+  <meta name="theme-color" content="#fbf8ef">
   <meta property="og:title" content="otter vault">
-  <meta property="og:description" content="helpful enough to notice. polite enough to ask.">
+  <meta property="og:description" content="your passwords and api keys. kept close.">
   <meta property="og:image" content="assets/icon.png">
-  <link rel="apple-touch-icon" href="assets/icon.png">
   <link rel="icon" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
   <link rel="preload" href="assets/fonts/Lumiare.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,8 +21,6 @@
     <defs>
       <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></symbol>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></symbol>
-      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
-      <symbol id="i-hand" viewBox="0 0 24 24"><path d="M12 3v9M8.5 6v7M15.5 5v7M19 8.5v5.5a7 7 0 0 1-14 0V11"/></symbol>
       <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3Z"/></symbol>
       <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M16 7l3 3M13.5 9.5l2 2"/></symbol>
       <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
@@ -30,285 +28,350 @@
       <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></symbol>
       <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2.5v3.5M15 2.5v3.5M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol>
       <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-      <symbol id="i-warn-url" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
       <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19L12 3.5Z"/><path d="M12 10v4.5M12 17.2v.3"/></symbol>
+      <symbol id="i-warn-url" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><path d="M12 3v9M8.5 6v7M15.5 5v7M19 8.5v5.5a7 7 0 0 1-14 0V11"/></symbol>
+      <symbol id="i-bug" viewBox="0 0 24 24"><rect x="7" y="8" width="10" height="12" rx="5"/><path d="M12 8V5M9 5l-1.5-2M15 5l1.5-2M7 13H3.5M20.5 13H17M7.5 18l-3 2M16.5 18l3 2"/></symbol>
     </defs>
   </svg>
 
+  <!-- the mascot, drawn in the logo's style; js clones it and swaps expressions with data-mood -->
+  <template id="mascot-template">
+    <svg class="mascot-svg" viewBox="0 0 220 210" aria-hidden="true">
+      <g class="m-sparkles show-happy show-proud">
+        <path d="M30 40l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+        <path d="M192 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+      </g>
+      <g class="m-bob">
+        <path class="m-body" d="M50 212C50 152 72 126 110 126S170 152 170 212Z"/>
+        <ellipse class="m-chest" cx="110" cy="186" rx="30" ry="28"/>
+        <g class="m-head">
+          <circle class="m-body" cx="44" cy="70" r="13"/>
+          <circle class="m-body" cx="176" cy="70" r="13"/>
+          <circle class="m-mint" cx="44" cy="71" r="6.5"/>
+          <circle class="m-mint" cx="176" cy="71" r="6.5"/>
+          <ellipse class="m-body" cx="110" cy="94" rx="70" ry="52"/>
+          <ellipse class="m-muzzle" cx="110" cy="116" rx="42" ry="23"/>
+          <g class="m-cheeks show-happy show-proud"><circle cx="70" cy="108" r="9"/><circle cx="150" cy="108" r="9"/></g>
+
+          <g class="show-idle m-blink">
+            <circle class="m-eye" cx="84" cy="82" r="10"/><circle class="m-pupil" cx="85" cy="83" r="5.5"/><circle class="m-glint" cx="87" cy="80.5" r="1.8"/>
+            <circle class="m-eye" cx="136" cy="82" r="10"/><circle class="m-pupil" cx="137" cy="83" r="5.5"/><circle class="m-glint" cx="139" cy="80.5" r="1.8"/>
+          </g>
+          <g class="show-alert">
+            <circle class="m-eye" cx="84" cy="82" r="12.5"/><circle class="m-pupil" cx="84" cy="82" r="5"/><circle class="m-glint" cx="86.5" cy="79.5" r="2"/>
+            <circle class="m-eye" cx="136" cy="82" r="12.5"/><circle class="m-pupil" cx="136" cy="82" r="5"/><circle class="m-glint" cx="138.5" cy="79.5" r="2"/>
+            <path class="m-line-cream" d="M70 60q14-9 28-1M122 59q14-8 28 1"/>
+          </g>
+          <g class="show-happy">
+            <path class="m-line-cream m-thick" d="M74 86q10-13 20 0M126 86q10-13 20 0"/>
+          </g>
+          <g class="show-shrug">
+            <circle class="m-eye" cx="84" cy="84" r="10"/><circle class="m-pupil" cx="82" cy="87" r="5"/>
+            <circle class="m-eye" cx="136" cy="84" r="10"/><circle class="m-pupil" cx="134" cy="87" r="5"/>
+            <path class="m-body" d="M72 83h24v-12H72zM124 83h24v-12h-24z"/>
+            <path class="m-line-cream" d="M72 71q12-4 24 1M124 69q12-6 24-1"/>
+          </g>
+          <g class="show-stern">
+            <ellipse class="m-eye" cx="84" cy="86" rx="10" ry="6"/><circle class="m-pupil" cx="85" cy="86" r="4.5"/>
+            <ellipse class="m-eye" cx="136" cy="86" rx="10" ry="6"/><circle class="m-pupil" cx="135" cy="86" r="4.5"/>
+            <path class="m-line-cream m-thick" d="M70 68l28 10M150 68l-28 10"/>
+          </g>
+          <g class="show-proud">
+            <circle class="m-eye" cx="84" cy="82" r="10"/><circle class="m-pupil" cx="85" cy="83" r="5.5"/><circle class="m-glint" cx="87" cy="80.5" r="1.8"/>
+            <path class="m-line-cream m-thick" d="M126 84q10-11 20 0"/>
+          </g>
+
+          <path class="m-nose" d="M97 100q13-9 26 0-3 11-13 12-10-1-13-12z"/>
+          <path class="m-line-dark show-idle show-shrug show-stern show-proud show-alert" d="M110 112v5"/>
+          <path class="m-line-dark show-idle show-proud" d="M98 118q12 10 24 0"/>
+          <path class="m-mouth show-happy" d="M95 116q15 22 30 0z"/>
+          <ellipse class="m-mouth show-alert" cx="110" cy="124" rx="5.5" ry="6.5"/>
+          <path class="m-line-dark show-shrug" d="M101 123q9-3 18 1"/>
+          <path class="m-line-dark show-stern" d="M99 126q11-8 22 0"/>
+          <path class="m-whisker" d="M74 113H34M75 121l-38 9M146 113h40M145 121l38 9"/>
+        </g>
+        <g class="m-paws">
+          <ellipse cx="80" cy="198" rx="20" ry="11"/><ellipse cx="140" cy="198" rx="20" ry="11"/>
+          <path class="m-line-cream m-toes" d="M74 194v6M82 193v7M90 194v6M130 194v6M138 193v7M146 194v6"/>
+        </g>
+      </g>
+    </svg>
+  </template>
+
   <header class="nav" id="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#top" aria-label="otter vault home"><img src="assets/logo-mark-dark.webp" alt="" width="34" height="34">otter vault</a>
+      <a class="brand" href="#top" aria-label="otter vault home"><img src="assets/logo-mark.webp" alt="" width="36" height="36">otter vault</a>
       <nav aria-label="primary">
         <a href="#how">how it works</a>
-        <a href="#notebook">the notebook</a>
         <a href="#security">security</a>
+        <a href="#faq">faq</a>
       </nav>
-      <a class="btn btn-sm btn-primary" href="#get">get otter</a>
+      <a class="btn btn-sm btn-primary" href="#demo">try the demo</a>
     </div>
   </header>
 
   <main id="main">
-    <!-- hero -->
+    <!-- hero: the headline and the live demo, together -->
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="glow" aria-hidden="true"></div>
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="badge"><span class="dot-live" aria-hidden="true"></span>early preview · not for real secrets yet</p>
-          <h1 id="hero-title">meet the otter<br>who keeps a <em>secret.</em></h1>
-          <p class="lede">a tiny companion for your browser. it notices the moment a password or api key appears, asks permission, then tucks it into an encrypted notebook.</p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span>early preview · not for real secrets yet</p>
+          <h1 id="hero-title">your passwords and api keys. <em>kept close.</em></h1>
+          <p class="lede">otter asks before saving your credentials to an encrypted browser vault, then helps fill them on the matching site.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="#get">get otter <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-ghost" href="#how">watch how it works</a>
+            <a class="btn btn-primary" href="#demo">try the demo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" href="#how">how it works</a>
           </div>
           <ul class="ticks" aria-label="principles">
-            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>no silent capture</li>
-            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>exact-site match</li>
-            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>no telemetry</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>asks before saving</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>encrypted on your device</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>fills the exact site only</li>
           </ul>
         </div>
 
-        <div class="hero-stage">
-          <div class="otter-stage" id="otter-stage" role="img" aria-label="otter, the vault's companion">
-            <canvas class="otter-canvas" id="otter-canvas" aria-hidden="true"></canvas>
-            <div class="otter-loading" id="otter-loading" aria-hidden="true"><span></span></div>
-          </div>
+        <div class="demo" id="demo" data-state="start" aria-label="live demo of otter vault">
+          <p class="demo-kicker"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg>you'll only see this key once. otter helps you keep it.</p>
+          <div class="window demo-window">
+            <div class="window-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="url keepcase" id="demo-url"><svg class="ic" aria-hidden="true"><use href="#i-lock" id="demo-url-icon"/></svg><span id="demo-url-text">console.example.dev/settings/keys</span></span>
+              <button class="demo-restart" type="button" id="demo-restart">restart</button>
+            </div>
 
-          <div class="prompt hero-prompt" id="hero-prompt" role="status" aria-live="polite">
-            <div class="prompt-head">
-              <img src="assets/icon.png" alt="" width="30" height="30">
-              <div>
-                <strong id="hero-prompt-title">i spotted a password.</strong>
-                <span id="hero-prompt-body">want me to keep it safe?</span>
+            <div class="demo-page">
+              <div class="demo-view" id="view-console">
+                <div class="console-top">
+                  <div><b>api keys</b><small>model console</small></div>
+                  <button class="btn btn-sm btn-primary demo-create" type="button" id="demo-create">+ create key</button>
+                </div>
+                <ul class="key-rows" aria-hidden="true">
+                  <li><span>staging worker</span><code class="keepcase">sk-live-••••x2Pd</code></li>
+                  <li><span>analytics cron</span><code class="keepcase">sk-live-••••9sQe</code></li>
+                </ul>
+                <div class="key-card" id="demo-key-card" hidden>
+                  <small>new key · shown once</small>
+                  <code class="keepcase" id="demo-key"></code>
+                  <small class="warn">copy this key now. you won't be able to see it again.</small>
+                </div>
+              </div>
+
+              <div class="demo-view" id="view-deploy" hidden>
+                <div class="console-top"><div><b>deploy settings</b><small>paste the api key for this project.</small></div></div>
+                <div class="field">
+                  <span class="field-label">api key</span>
+                  <span class="field-input" id="demo-field"><span class="field-value keepcase" id="demo-field-value"></span><i class="caret" aria-hidden="true"></i></span>
+                </div>
+                <span class="fake-submit" aria-hidden="true">save and deploy</span>
+              </div>
+
+              <div class="buddy">
+                <div class="bubble" id="demo-bubble" role="status" aria-live="polite" hidden>
+                  <strong id="demo-bubble-title"></strong>
+                  <span id="demo-bubble-body"></span>
+                  <div class="bubble-actions" id="demo-bubble-actions"></div>
+                </div>
+                <div class="mascot demo-mascot" id="demo-mascot" data-mood="idle"></div>
               </div>
             </div>
-            <div class="prompt-actions" id="hero-prompt-actions">
-              <button class="btn btn-xs btn-mint" type="button" data-hero="save">keep it safe</button>
-              <button class="btn btn-xs btn-quiet" type="button" data-hero="skip">not now</button>
-            </div>
+          </div>
+
+          <ol class="stepper" aria-label="demo steps">
+            <li><button type="button" class="step-chip" data-step="1" aria-current="step"><span>1</span>a secret appears</button></li>
+            <li><button type="button" class="step-chip" data-step="2"><span>2</span>otter asks</button></li>
+            <li><button type="button" class="step-chip" data-step="3"><span>3</span>only the right site</button></li>
+          </ol>
+          <div class="demo-foot">
+            <p class="demo-caption" id="demo-caption" aria-live="polite">click “create key” to start.</p>
+            <button class="btn btn-xs btn-ghost" type="button" id="demo-play">play it for me</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- statement -->
-    <section class="statement" aria-label="product principle">
-      <div class="wrap">
-        <p class="eyebrow">the idea is simple</p>
-        <p class="statement-text">security tools usually ask you to learn their language. <span>otter learns your moment instead.</span></p>
-        <div class="pair">
-          <p><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>helpful enough to notice.</p>
-          <p><svg class="ic" aria-hidden="true"><use href="#i-hand"/></svg>polite enough to ask.</p>
-        </div>
+    <!-- short intro -->
+    <section class="intro" aria-label="the idea">
+      <div class="wrap intro-inner">
+        <p class="intro-text">security tools usually ask you to learn their language. <span>otter learns your moment instead.</span></p>
+        <ul class="intro-pair">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>helpful enough to notice.</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-hand"/></svg>polite enough to ask.</li>
+        </ul>
       </div>
     </section>
 
-    <!-- how it works: live demo -->
+    <!-- how it works: three short, selectable steps -->
     <section class="how" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <header class="section-head">
-          <p class="eyebrow">how it works · live demo</p>
-          <h2 id="how-title">three moments. try them yourself.</h2>
-          <p class="section-sub">a pretend console, the real flow. click through it, or let otter show you.</p>
+          <p class="eyebrow">how it works</p>
+          <h2 id="how-title">three moments. that's the whole job.</h2>
         </header>
-
-        <div class="how-grid">
-          <ol class="steps">
-            <li class="step is-active" data-step="1">
-              <span class="step-num">01</span>
-              <div>
-                <h3>a secret appears.</h3>
-                <p>a password field, a masked api-key input, or a one-time token rendered as page text. otter recognizes the moment without saving anything.</p>
-              </div>
-            </li>
-            <li class="step" data-step="2">
-              <span class="step-num">02</span>
-              <div>
-                <h3>the otter asks.</h3>
-                <p>no background hoarding. no vague consent. you choose whether this exact value belongs in the notebook.</p>
-              </div>
-            </li>
-            <li class="step" data-step="3">
-              <span class="step-num">03</span>
-              <div>
-                <h3>it comes back here. only here.</h3>
-                <p>before filling, otter checks the exact protocol, hostname, port and credential kind. a similar-looking website is not the same website.</p>
-              </div>
-            </li>
-          </ol>
-
-          <div class="demo" id="demo" data-state="start">
-            <div class="window demo-window">
-              <div class="window-bar">
-                <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
-                <span class="url demo-url keepcase" id="demo-url"><svg class="ic" aria-hidden="true"><use href="#i-lock" id="demo-url-icon"/></svg><span id="demo-url-text">console.example.dev/settings/keys</span></span>
-                <button class="demo-restart" type="button" id="demo-restart" aria-label="restart the demo">restart</button>
-              </div>
-
-              <div class="demo-page">
-                <!-- the key console -->
-                <div class="demo-view view-console" id="view-console">
-                  <div class="console-top">
-                    <div><b>api keys</b><small>model console · keys are shown once.</small></div>
-                    <button class="btn btn-sm btn-primary demo-create" type="button" id="demo-create">+ create key</button>
-                  </div>
-                  <ul class="key-rows" aria-hidden="true">
-                    <li><span>staging worker</span><code class="keepcase">sk-live-••••x2Pd</code></li>
-                    <li><span>analytics cron</span><code class="keepcase">sk-live-••••9sQe</code></li>
-                  </ul>
-                  <div class="key-card" id="demo-key-card" hidden>
-                    <small>new key · shown once</small>
-                    <code class="keepcase" id="demo-key"></code>
-                    <small class="warn">copy this key now. you won't be able to see it again.</small>
-                  </div>
-                </div>
-
-                <!-- a deploy page that asks for the key (lookalike, then real) -->
-                <div class="demo-view view-deploy" id="view-deploy" hidden>
-                  <div class="console-top"><div><b>deploy settings</b><small>paste the api key for this project.</small></div></div>
-                  <label class="field">
-                    <span class="field-label">api key</span>
-                    <span class="field-input field-focus" id="demo-field"><span class="field-value keepcase" id="demo-field-value"></span><i class="caret" aria-hidden="true"></i></span>
-                  </label>
-                  <span class="signin-btn" aria-hidden="true">save and deploy</span>
-                </div>
-
-                <!-- the otter and its bubble -->
-                <div class="buddy" id="demo-buddy">
-                  <div class="bubble" id="demo-bubble" role="status" aria-live="polite" hidden>
-                    <strong id="demo-bubble-title"></strong>
-                    <span id="demo-bubble-body"></span>
-                    <div class="bubble-actions" id="demo-bubble-actions"></div>
-                  </div>
-                  <div class="otter" id="demo-otter" aria-hidden="true"></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="demo-foot">
-              <p class="demo-caption" id="demo-caption" aria-live="polite">you're on the real console. make a key to begin.</p>
-              <div class="demo-controls">
-                <span class="notebook-count" id="demo-count"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span>notebook · 0 secrets</span></span>
-                <button class="btn btn-xs btn-ghost" type="button" id="demo-play">play it for me</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ol class="how-cards">
+          <li class="how-card">
+            <span class="how-num">01</span>
+            <h3>a secret appears.</h3>
+            <p>a password field, an api-key input, or a one-time key shown as page text. otter notices, and saves nothing yet.</p>
+            <button class="link-btn" type="button" data-jump="1">see it in the demo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </li>
+          <li class="how-card">
+            <span class="how-num">02</span>
+            <h3>otter asks.</h3>
+            <p>no background hoarding, no vague consent. you decide whether this exact value belongs in the vault.</p>
+            <button class="link-btn" type="button" data-jump="2">see it in the demo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </li>
+          <li class="how-card">
+            <span class="how-num">03</span>
+            <h3>it fills the right site. only that one.</h3>
+            <p>otter checks the exact protocol, hostname and port. a lookalike like <code class="keepcase">examp1e.dev</code> gets nothing.</p>
+            <button class="link-btn" type="button" data-jump="3">see it in the demo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- notebook -->
+    <!-- the vault preview -->
     <section class="notebook" id="notebook" aria-labelledby="notebook-title">
       <div class="wrap split">
         <div class="split-copy">
-          <p class="eyebrow">the notebook</p>
-          <h2 id="notebook-title">your keys and logins, held a little closer.</h2>
-          <p>not a spreadsheet of secrets. a calm, compact notebook that shows just enough, and keeps the sensitive parts encrypted.</p>
-          <ul class="chips" aria-label="notebook properties">
+          <p class="eyebrow">the vault</p>
+          <h2 id="notebook-title">a calm notebook, not a dashboard.</h2>
+          <p>logins and api keys in one compact list. it shows just enough, and keeps labels, usernames and sites encrypted too.</p>
+          <ul class="chips" aria-label="vault properties">
             <li><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>encrypted metadata</li>
             <li><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg>exact-site binding</li>
             <li><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg>locks after 5, 15 or 30 min</li>
           </ul>
-          <p class="aside-note">no security theater. no noisy dashboard.</p>
         </div>
 
-        <div class="vault" aria-label="example of the otter vault notebook">
+        <div class="vault" id="vault" data-locked="false" aria-label="vault preview">
+          <span class="preview-tag">interactive preview</span>
           <div class="vault-head">
             <img src="assets/logo-mark.webp" alt="" width="40" height="40">
-            <div><strong>my notebook</strong><span><i class="dot-live" aria-hidden="true"></i>unlocked · auto-lock 15 min</span></div>
-            <span class="btn btn-xs btn-quiet" aria-hidden="true">lock now</span>
+            <div><strong>my vault</strong><span id="vault-status"><i class="dot" aria-hidden="true"></i>unlocked · auto-lock 15 min</span></div>
+            <button class="btn btn-xs btn-ghost" type="button" id="vault-lock">lock now</button>
           </div>
-          <div class="tabs" role="tablist" aria-label="filter secrets">
-            <button role="tab" aria-selected="true" data-filter="all">all <b>4</b></button>
-            <button role="tab" aria-selected="false" data-filter="login">logins <b>2</b></button>
-            <button role="tab" aria-selected="false" data-filter="api-key">api keys <b>2</b></button>
+          <div class="vault-body" id="vault-body">
+            <div class="tabs" role="tablist" aria-label="filter secrets">
+              <button role="tab" aria-selected="true" data-filter="all">all <b>4</b></button>
+              <button role="tab" aria-selected="false" data-filter="login">logins <b>2</b></button>
+              <button role="tab" aria-selected="false" data-filter="api-key">api keys <b>2</b></button>
+            </div>
+            <ul class="records">
+              <li data-kind="login"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>acme workspace</b><small class="keepcase">you@example.com · acme.dev</small></div><code>••••••••</code></li>
+              <li data-kind="api-key"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><div><b>model production key</b><small class="keepcase">API key · console.example.dev</small></div><code class="keepcase">sk-••••7Q</code></li>
+              <li data-kind="login"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>design account</b><small class="keepcase">design@example.com · figma.example</small></div><code>••••••••</code></li>
+              <li data-kind="api-key"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><div><b>staging worker</b><small class="keepcase">API key · cloud.example.com</small></div><code class="keepcase">nb_••••x2</code></li>
+            </ul>
           </div>
-          <ul class="records">
-            <li data-kind="login"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>acme workspace</b><small class="keepcase">you@example.com · acme.dev</small></div><code>••••••••••</code></li>
-            <li data-kind="api-key"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><div><b>model production key</b><small class="keepcase">API key · console.example.dev</small></div><code class="keepcase">sk-••••7Q</code></li>
-            <li data-kind="login"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>design account</b><small class="keepcase">design@example.com · figma.example</small></div><code>••••••••••</code></li>
-            <li data-kind="api-key"><span class="rec-ic"><svg class="ic" aria-hidden="true"><use href="#i-key"/></svg></span><div><b>staging worker</b><small class="keepcase">API key · cloud.example.com</small></div><code class="keepcase">nb_••••x2</code></li>
-          </ul>
+          <div class="vault-locked" id="vault-locked" hidden>
+            <svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>
+            <strong>vault locked</strong>
+            <p>nothing is readable until you unlock with your passphrase. in the real extension that happens in the toolbar popup.</p>
+            <button class="btn btn-sm btn-primary" type="button" id="vault-unlock">unlock (demo)</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- security -->
+    <!-- security, on a deep-green band -->
     <section class="security" id="security" aria-labelledby="security-title">
       <div class="wrap">
         <header class="section-head">
           <p class="eyebrow">security, honestly</p>
-          <h2 id="security-title">playful is the interface.<br>careful is the architecture.</h2>
-          <p class="section-sub">otter makes security approachable without making impossible promises. here's what exists in the browser build today, and what doesn't yet.</p>
+          <h2 id="security-title">friendly on the outside. careful underneath.</h2>
+          <p class="section-sub">here's what exists in the browser extension today, and what doesn't yet.</p>
         </header>
 
         <div class="cards">
           <article class="card">
-            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="tag tag-built">built</span></div>
+            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="tag">built</span></div>
             <h3>authenticated encryption</h3>
-            <p>aes-256-gcm protects the whole credential, label, site and username included, before it touches browser storage. the key comes from your passphrase through 600,000 rounds of pbkdf2.</p>
+            <p>aes-256-gcm protects the whole entry, label, site and username included. the key comes from your passphrase through 600,000 rounds of pbkdf2.</p>
           </article>
           <article class="card">
-            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><span class="tag tag-built">built</span></div>
-            <h3>strict request boundaries</h3>
-            <p>save and fill requests are checked against the browser's own record of which page sent them, and matched to the exact origin. a page can't claim to be somewhere it isn't.</p>
+            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><span class="tag">built</span></div>
+            <h3>strict site checks</h3>
+            <p>every save and fill is matched to the page the browser itself says sent it. a page can't claim to be somewhere it isn't.</p>
           </article>
           <article class="card">
-            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-timer"/></svg></span><span class="tag tag-built">built</span></div>
-            <h3>short-lived unlock sessions</h3>
-            <p>you pick an inactivity window of 5, 15 or 30 minutes. closing the browser clears the unlocked session entirely.</p>
+            <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-bug"/></svg></span><span class="tag">built</span></div>
+            <h3>click-hijack protection</h3>
+            <p>otter only acts on a real click on a prompt nothing is covering. we attack-tested this in-house with decoy overlays and lookalike domains.</p>
           </article>
           <article class="card card-next">
             <div class="card-top"><span class="card-ic"><svg class="ic" aria-hidden="true"><use href="#i-chip"/></svg></span><span class="tag tag-next">next</span></div>
-            <h3>hardware-backed key custody</h3>
-            <p>secure enclave and tpm integration are the production direction. it's on the roadmap, not a claim about today.</p>
+            <h3>independent audit and hardware keys</h3>
+            <p>an outside security audit, then secure enclave and tpm-backed keys. on the roadmap, not claims about today.</p>
           </article>
         </div>
 
-        <div class="callout" role="note">
+        <div class="notice" role="note">
           <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
           <div>
             <strong>this is a development preview.</strong>
-            <p>it hasn't had an independent security audit. don't store cryptocurrency seeds, production api keys or valuable credentials yet.</p>
+            <p>it hasn't had an independent security audit yet. don't store cryptocurrency seeds, production api keys or valuable credentials.</p>
           </div>
-          <a class="link" href="https://krishnag1703.github.io/ottice-privacy/">read the privacy policy <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="link" href="https://krishnag1703.github.io/ottice-privacy/">privacy policy <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
       </div>
+    </section>
 
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>ask first</span><i></i><span>lock it down</span><i></i><span>match the site</span><i></i>
-          <span>ask first</span><i></i><span>lock it down</span><i></i><span>match the site</span><i></i>
-          <span>ask first</span><i></i><span>lock it down</span><i></i><span>match the site</span><i></i>
-          <span>ask first</span><i></i><span>lock it down</span><i></i><span>match the site</span><i></i>
+    <!-- faq -->
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-grid">
+        <header class="section-head">
+          <p class="eyebrow">questions</p>
+          <h2 id="faq-title">the practical bits.</h2>
+        </header>
+        <div class="faq-list">
+          <details>
+            <summary>where are my secrets stored?</summary>
+            <p>only in your browser, on your device. entries are encrypted before they're written to the extension's local storage. there are no otter servers, accounts or sync, so nothing leaves your machine.</p>
+          </details>
+          <details>
+            <summary>which browsers does it work in?</summary>
+            <p>chrome first, and chrome-based browsers like brave, arc and vivaldi through the chrome web store. edge and firefox are next; safari comes later.</p>
+          </details>
+          <details>
+            <summary>what if i forget my passphrase?</summary>
+            <p>the vault can't be opened, by you or by us. there is no recovery key in this preview, which is part of why it isn't meant for important credentials yet.</p>
+          </details>
+          <details>
+            <summary>what can't it do yet?</summary>
+            <p>it saves logins and api keys only, with no sync, import, export or sharing. it hasn't had an independent audit. and like all autofill, a filled value lives in that site's page, so a site with a script-injection bug could read what you fill there.</p>
+          </details>
+          <details>
+            <summary>does otter see everything i type?</summary>
+            <p>otter looks at pages locally to spot password fields and newly revealed keys. nothing is recorded or sent anywhere, and nothing is saved unless you tap “keep it safe”.</p>
+          </details>
         </div>
       </div>
     </section>
 
     <!-- closing -->
-    <section class="manifesto" id="get" aria-labelledby="get-title">
-      <div class="wrap narrow center">
-        <img class="manifesto-otter" src="assets/otter/salute.webp" alt="" width="160" height="190" loading="lazy">
-        <p class="eyebrow">a smaller kind of security tool</p>
-        <h2 id="get-title">otter doesn't want to become your whole browser.</h2>
-        <p class="section-sub">it wants to show up at the right moment, do one important thing well, then float quietly back into the corner.</p>
-        <div class="actions center">
-          <span class="btn btn-primary is-disabled" aria-disabled="true">chrome web store · coming soon</span>
-          <a class="btn btn-ghost" href="mailto:krishna091718@gmail.com?subject=otter%20vault%20launch">email me when it's live</a>
+    <section class="closer" id="get" aria-labelledby="get-title">
+      <div class="wrap closer-inner">
+        <div class="mascot closer-mascot" data-mood="happy" aria-hidden="true"></div>
+        <div>
+          <p class="eyebrow">get otter</p>
+          <h2 id="get-title">keep every key.</h2>
+          <p class="section-sub">otter vault is heading to the chrome web store.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#demo">try the demo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" href="mailto:krishna091718@gmail.com?subject=otter%20vault%20launch">email me when it's live</a>
+          </div>
+          <p class="store-note">chrome web store · coming soon</p>
         </div>
-        <ul class="browsers" aria-label="browser availability">
-          <li><b>chrome</b><span>in review</span></li>
-          <li><b>edge</b><span>next</span></li>
-          <li><b>firefox</b><span>next</span></li>
-          <li><b>safari</b><span>later</span></li>
-        </ul>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-inner">
-      <a class="brand" href="#top"><img src="assets/logo-mark-dark.webp" alt="" width="28" height="28">otter vault</a>
-      <span class="footer-note">your secrets, kept close. development preview.</span>
+      <a class="brand" href="#top"><img src="assets/logo-mark.webp" alt="" width="28" height="28">otter vault</a>
+      <span class="footer-note">development preview · not independently audited yet</span>
       <nav aria-label="footer">
         <a href="https://krishnag1703.github.io/ottice-privacy/">privacy</a>
         <a href="mailto:krishna091718@gmail.com">contact</a>
@@ -316,8 +379,6 @@
     </div>
   </footer>
 
-  <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js" } }</script>
   <script src="main.js" defer></script>
-  <script type="module" src="otter3d.js"></script>
 </body>
 </html>

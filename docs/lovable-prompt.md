@@ -1,5 +1,7 @@
 # Lovable prompt: Otter Vault landing page
 
+> **Out of date (2026-09-14):** this describes the earlier dark version with the 3D otter and video clips. The site is now a cream, mint and deep-green page with the demo in the hero, a flat SVG mascot, a vault preview and an FAQ. Regenerate before using.
+
 Paste everything below the line into Lovable. Before sending, upload these files from `ottice-site/assets/` so Lovable can use them:
 
 - `icon.png` (app icon)
