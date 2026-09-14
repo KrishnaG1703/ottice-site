@@ -4,7 +4,9 @@
 
   /* ---------- mascot: one svg, expressions switched by data-mood ---------- */
   const template = $('mascot-template');
-  document.querySelectorAll('.mascot').forEach(el => el.append(template.content.cloneNode(true)));
+  const flatTemplate = $('mascot-flat-template');
+  // the demo uses the flat, expressive otter; elsewhere the glossy green otter
+  document.querySelectorAll('.mascot').forEach(el => el.append((el.dataset.mascot === 'flat' ? flatTemplate : template).content.cloneNode(true)));
   function setMood(el, mood) {
     if (!el) return;
     // restart the entrance animation even when the mood repeats

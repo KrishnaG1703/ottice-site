@@ -36,6 +36,70 @@
     </defs>
   </svg>
 
+  <!-- the flat mascot for the demo, drawn in the logo's style; expressions swap with data-mood -->
+  <template id="mascot-flat-template">
+    <svg class="mascot-svg" viewBox="0 0 220 210" aria-hidden="true">
+      <g class="m-sparkles show-happy show-proud">
+        <path d="M30 40l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+        <path d="M192 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
+      </g>
+      <g class="m-bob">
+        <path class="m-body" d="M50 212C50 152 72 126 110 126S170 152 170 212Z"/>
+        <ellipse class="m-chest" cx="110" cy="186" rx="30" ry="28"/>
+        <g class="m-head">
+          <circle class="m-body" cx="44" cy="70" r="13"/>
+          <circle class="m-body" cx="176" cy="70" r="13"/>
+          <circle class="m-mint" cx="44" cy="71" r="6.5"/>
+          <circle class="m-mint" cx="176" cy="71" r="6.5"/>
+          <ellipse class="m-body" cx="110" cy="94" rx="70" ry="52"/>
+          <ellipse class="m-muzzle" cx="110" cy="116" rx="42" ry="23"/>
+          <g class="m-cheeks show-happy show-proud"><circle cx="70" cy="108" r="9"/><circle cx="150" cy="108" r="9"/></g>
+
+          <g class="show-idle m-blink">
+            <circle class="m-eye" cx="84" cy="82" r="10"/><circle class="m-pupil" cx="85" cy="83" r="5.5"/><circle class="m-glint" cx="87" cy="80.5" r="1.8"/>
+            <circle class="m-eye" cx="136" cy="82" r="10"/><circle class="m-pupil" cx="137" cy="83" r="5.5"/><circle class="m-glint" cx="139" cy="80.5" r="1.8"/>
+          </g>
+          <g class="show-alert">
+            <circle class="m-eye" cx="84" cy="82" r="12.5"/><circle class="m-pupil" cx="84" cy="82" r="5"/><circle class="m-glint" cx="86.5" cy="79.5" r="2"/>
+            <circle class="m-eye" cx="136" cy="82" r="12.5"/><circle class="m-pupil" cx="136" cy="82" r="5"/><circle class="m-glint" cx="138.5" cy="79.5" r="2"/>
+            <path class="m-line-cream" d="M70 60q14-9 28-1M122 59q14-8 28 1"/>
+          </g>
+          <g class="show-happy">
+            <path class="m-line-cream m-thick" d="M74 86q10-13 20 0M126 86q10-13 20 0"/>
+          </g>
+          <g class="show-shrug">
+            <circle class="m-eye" cx="84" cy="84" r="10"/><circle class="m-pupil" cx="82" cy="87" r="5"/>
+            <circle class="m-eye" cx="136" cy="84" r="10"/><circle class="m-pupil" cx="134" cy="87" r="5"/>
+            <path class="m-body" d="M72 83h24v-12H72zM124 83h24v-12h-24z"/>
+            <path class="m-line-cream" d="M72 71q12-4 24 1M124 69q12-6 24-1"/>
+          </g>
+          <g class="show-stern">
+            <ellipse class="m-eye" cx="84" cy="86" rx="10" ry="6"/><circle class="m-pupil" cx="85" cy="86" r="4.5"/>
+            <ellipse class="m-eye" cx="136" cy="86" rx="10" ry="6"/><circle class="m-pupil" cx="135" cy="86" r="4.5"/>
+            <path class="m-line-cream m-thick" d="M70 68l28 10M150 68l-28 10"/>
+          </g>
+          <g class="show-proud">
+            <circle class="m-eye" cx="84" cy="82" r="10"/><circle class="m-pupil" cx="85" cy="83" r="5.5"/><circle class="m-glint" cx="87" cy="80.5" r="1.8"/>
+            <path class="m-line-cream m-thick" d="M126 84q10-11 20 0"/>
+          </g>
+
+          <path class="m-nose" d="M97 100q13-9 26 0-3 11-13 12-10-1-13-12z"/>
+          <path class="m-line-dark show-idle show-shrug show-stern show-proud show-alert" d="M110 112v5"/>
+          <path class="m-line-dark show-idle show-proud" d="M98 118q12 10 24 0"/>
+          <path class="m-mouth show-happy" d="M95 116q15 22 30 0z"/>
+          <ellipse class="m-mouth show-alert" cx="110" cy="124" rx="5.5" ry="6.5"/>
+          <path class="m-line-dark show-shrug" d="M101 123q9-3 18 1"/>
+          <path class="m-line-dark show-stern" d="M99 126q11-8 22 0"/>
+          <path class="m-whisker" d="M74 113H34M75 121l-38 9M146 113h40M145 121l38 9"/>
+        </g>
+        <g class="m-paws">
+          <ellipse cx="80" cy="198" rx="20" ry="11"/><ellipse cx="140" cy="198" rx="20" ry="11"/>
+          <path class="m-line-cream m-toes" d="M74 194v6M82 193v7M90 194v6M130 194v6M138 193v7M146 194v6"/>
+        </g>
+      </g>
+    </svg>
+  </template>
+
   <!-- the glossy green otter; js clones it into each .mascot and reacts through data-mood (motion plus a small badge) -->
   <template id="mascot-template">
     <div class="mascot-art">
@@ -119,7 +183,7 @@
                   <span id="demo-bubble-body"></span>
                   <div class="bubble-actions" id="demo-bubble-actions"></div>
                 </div>
-                <div class="mascot demo-mascot" id="demo-mascot" data-mood="idle"></div>
+                <div class="mascot demo-mascot" id="demo-mascot" data-mascot="flat" data-mood="idle"></div>
               </div>
             </div>
           </div>
