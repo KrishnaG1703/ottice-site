@@ -1,47 +1,12 @@
-// hero otter: a meshy sculpt rendered as warm clay, revealing the finished render on hover
+// hero otter: a meshy sculpt rendered as warm clay, swaying and leaning toward the cursor
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three/loaders/GLTFLoader.js';
 import { mergeVertices } from './vendor/three/utils/BufferGeometryUtils.js';
 
 const stage = document.getElementById('otter-stage');
 const canvas = document.getElementById('otter-canvas');
-const hint = stage.querySelector('.hint-text');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const touch = matchMedia('(hover: none)').matches;
-if (touch) hint.textContent = 'tap to meet the real otter';
-
 const ease = (dt, rate) => 1 - Math.exp(-dt * rate);
-
-/* ---------- reveal: a circle of the real render grows from the pointer ---------- */
-let revealed = false;
-let radius = 0; // percent of the stage
-function revealAt(x, y) {
-  stage.style.setProperty('--rx', `${x}%`);
-  stage.style.setProperty('--ry', `${y}%`);
-}
-function setRevealed(next, event) {
-  if (event && 'clientX' in event && event.clientX) {
-    const rect = stage.getBoundingClientRect();
-    revealAt(((event.clientX - rect.left) / rect.width) * 100, ((event.clientY - rect.top) / rect.height) * 100);
-  } else if (next) {
-    revealAt(50, 45);
-  }
-  revealed = next;
-  stage.classList.toggle('is-revealed', next);
-  wake();
-}
-
-if (touch) {
-  stage.addEventListener('click', event => setRevealed(!revealed, event));
-} else {
-  stage.addEventListener('pointerenter', event => setRevealed(true, event));
-  stage.addEventListener('pointerleave', event => setRevealed(false, event));
-}
-stage.addEventListener('focus', () => setRevealed(true));
-stage.addEventListener('blur', () => setRevealed(false));
-stage.addEventListener('keydown', event => {
-  if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setRevealed(!revealed); }
-});
 
 /* ---------- the 3d sculpt ---------- */
 let renderer;
@@ -53,11 +18,13 @@ try {
 
 let lookX = 0;
 let lookY = 0;
-stage.addEventListener('pointermove', event => {
+// lean toward the cursor anywhere on the page, no hovering required
+addEventListener('pointermove', event => {
+  if (event.pointerType !== 'mouse') return;
   const rect = stage.getBoundingClientRect();
-  lookX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  lookY = ((event.clientY - rect.top) / rect.height) * 2 - 1;
-});
+  lookX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+  lookY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+}, { passive: true });
 
 let running = false;
 let visible = true;
@@ -144,43 +111,27 @@ if (renderer) {
   }, undefined, error => {
     console.warn('otter: model failed to load', error);
     stage.classList.add('no-webgl', 'is-ready');
-    setRevealed(true);
   });
 
   let yaw = 0;
   let pitch = 0;
   frameFn = (dt, time) => {
-    // reveal radius eases toward its target
-    const target = revealed ? 160 : 0;
-    radius += (target - radius) * ease(dt, revealed ? 2.8 : 5);
-    if (Math.abs(target - radius) < 0.3) radius = target;
-    stage.style.setProperty('--r', `${radius.toFixed(2)}%`);
-
-    // idle sway; when revealed, face forward to match the render underneath
+    // idle sway, leaning a little toward the cursor
     const idle = reduceMotion ? 0 : Math.sin(time * 0.6) * 0.55;
-    const wantYaw = revealed ? 0 : idle + lookX * 0.35;
-    const wantPitch = revealed ? 0 : lookY * 0.12;
-    yaw += (wantYaw - yaw) * ease(dt, revealed ? 6 : 2.4);
+    const wantYaw = idle + lookX * 0.35;
+    const wantPitch = lookY * 0.12;
+    yaw += (wantYaw - yaw) * ease(dt, 2.4);
     pitch += (wantPitch - pitch) * ease(dt, 3);
     pivot.rotation.set(pitch, yaw, 0);
     pivot.position.y = reduceMotion ? 0 : Math.sin(time * 1.4) * 0.03;
 
     renderer.render(scene, camera);
     // keep animating while swaying, easing, or revealing
-    return !reduceMotion || Math.abs(target - radius) > 0 || Math.abs(wantYaw - yaw) > 0.001;
+    return !reduceMotion || Math.abs(wantYaw - yaw) > 0.001 || Math.abs(wantPitch - pitch) > 0.001;
   };
 
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
     if (visible) wake();
   }).observe(stage);
-} else {
-  // no webgl: the still render is the otter
-  frameFn = dt => {
-    const target = 160;
-    radius += (target - radius) * ease(dt, 6);
-    stage.style.setProperty('--r', `${radius.toFixed(2)}%`);
-    return Math.abs(target - radius) > 0.3;
-  };
-  wake();
 }

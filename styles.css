@@ -279,9 +279,6 @@ p { margin: 0; color: var(--ink-2); }
 /* hero: the 3d otter, with the finished render revealed on hover */
 .hero-stage { position: relative; }
 .otter-stage {
-  --rx: 50%;
-  --ry: 55%;
-  --r: 0%;
   position: relative;
   aspect-ratio: 5 / 6;
   max-height: min(640px, 72vh);
@@ -290,50 +287,14 @@ p { margin: 0; color: var(--ink-2); }
   background:
     radial-gradient(60% 55% at 50% 58%, rgba(60, 150, 140, 0.2), transparent 70%),
     radial-gradient(40% 30% at 50% 92%, rgba(159, 226, 176, 0.1), transparent 70%);
-  cursor: pointer;
-  outline: none;
-  touch-action: manipulation;
 }
-.otter-stage:focus-visible { box-shadow: 0 0 0 2px var(--mint); }
-.otter-canvas { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity 500ms var(--ease-out); }
-.otter-real {
-  position: absolute;
-  inset: 4% 8% 2%;
-  width: 84%;
-  height: 94%;
-  object-fit: contain;
-  pointer-events: none;
-  -webkit-mask-image: radial-gradient(circle at var(--rx) var(--ry), #000 calc(var(--r) - 8%), transparent var(--r));
-  mask-image: radial-gradient(circle at var(--rx) var(--ry), #000 calc(var(--r) - 8%), transparent var(--r));
-  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
-}
-.otter-stage.is-revealed .otter-canvas { opacity: 0.12; }
+.otter-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.otter-stage.no-webgl { background: url("assets/otter3d/otter-real.webp") center / contain no-repeat; }
 .otter-stage.no-webgl .otter-canvas { display: none; }
 .otter-loading { position: absolute; inset: 0; display: grid; place-items: center; transition: opacity 400ms; }
 .otter-loading span { width: 40px; height: 40px; border: 2px solid var(--line-strong); border-top-color: var(--mint); border-radius: 50%; animation: spin 900ms linear infinite; }
 .otter-stage.is-ready .otter-loading { opacity: 0; pointer-events: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.otter-hint {
-  position: absolute;
-  left: 50%;
-  top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: rgba(5, 9, 11, 0.7);
-  color: var(--ink-2);
-  font-size: 0.84rem;
-  white-space: nowrap;
-  transform: translateX(-50%);
-  transition: opacity 300ms var(--ease-out);
-  backdrop-filter: blur(8px);
-}
-.hint-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); animation: nudge-dot 1.6s ease-in-out infinite; }
-@keyframes nudge-dot { 50% { transform: scale(1.6); opacity: 0.5; } }
-.otter-stage.is-revealed .otter-hint { opacity: 0; }
 .hero-stage .hero-prompt { position: absolute; right: -28px; bottom: -48px; }
 
 .signin { padding: 36px 40px 44px; background: linear-gradient(180deg, #0e191c, #0b1417); }
