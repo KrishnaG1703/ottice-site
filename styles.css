@@ -181,7 +181,7 @@ p { margin: 0; color: var(--ink-2); }
   font-size: 1.35rem;
   text-decoration: none;
 }
-.brand img { border-radius: 9px; }
+.brand img { border-radius: 0; }
 .nav nav { display: flex; gap: 4px; margin-left: auto; }
 .nav nav a {
   display: inline-flex;
