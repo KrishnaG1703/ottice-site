@@ -1,0 +1,284 @@
+@font-face {
+  font-family: "Lumiare";
+  src: url("assets/fonts/Lumiare.otf") format("opentype");
+  font-display: swap;
+}
+
+:root {
+  --ink: #eef6f1;
+  --dim: rgba(238, 246, 241, 0.72);
+  --faint: rgba(238, 246, 241, 0.42);
+  --mint: #9fe2b0;
+  --moon: #bfe9ff;
+  --river: #0b2a33;
+  --deep: #010406;
+  --line: rgba(238, 246, 241, 0.14);
+  --panel-max: 40rem;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  background: var(--deep);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--deep);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+  text-transform: lowercase;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* keys, urls and anything that must read exactly as typed */
+.keepcase { text-transform: none; }
+
+::selection { background: rgba(159, 226, 176, 0.3); }
+
+a { color: inherit; }
+
+/* loader — js removes it; the css bail clears it even if js never runs */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 42%, #0b2027 0, var(--deep) 60%);
+  transition: opacity 900ms ease, visibility 900ms;
+  animation: loaderBail 900ms ease 6s forwards;
+}
+@keyframes loaderBail { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+#loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-inner { display: grid; justify-items: center; gap: 1.1rem; }
+.loader-word { font-family: "Lumiare", serif; font-size: clamp(3rem, 9vw, 6rem); letter-spacing: 0.06em; }
+.loader-bar { width: min(58vw, 20rem); height: 2px; background: var(--line); overflow: hidden; }
+.loader-bar span { display: block; height: 100%; width: 0; background: var(--mint); transition: width 300ms ease; }
+
+#river, #wake {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+#river { z-index: 0; }
+#wake { z-index: 2; }
+
+#topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem clamp(1.2rem, 4vw, 3rem);
+  background: linear-gradient(to bottom, rgba(1, 4, 6, 0.85), rgba(1, 4, 6, 0));
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Lumiare", serif;
+  font-size: 1.25rem;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.brand img { border-radius: 8px; }
+#topbar nav { display: flex; gap: clamp(1rem, 3vw, 2rem); font-size: 0.92rem; }
+#topbar nav a { color: var(--dim); text-decoration: none; transition: color 200ms; }
+#topbar nav a:hover { color: var(--ink); }
+
+main { position: relative; z-index: 5; }
+
+.panel {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* copy always sits left, so the otter's water is always on the right */
+  padding: 7rem clamp(1.4rem, 7vw, 7rem) 5rem;
+  max-width: calc(var(--panel-max) + 2 * clamp(1.4rem, 7vw, 7rem));
+  scroll-snap-align: start;
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--mint);
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+}
+
+.display {
+  margin: 0;
+  font-family: "Lumiare", serif;
+  font-weight: 400;
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  margin: 0 0 1.1rem;
+  font-family: "Lumiare", serif;
+  font-weight: 400;
+  font-size: clamp(2.3rem, 5.4vw, 4.2rem);
+  line-height: 1.02;
+}
+
+p { margin: 0 0 1rem; color: var(--dim); }
+.lede { margin-top: 1.4rem; font-size: clamp(1.15rem, 2vw, 1.45rem); color: var(--ink); }
+.tempt { margin-top: 0.6rem; color: var(--ink); font-style: italic; }
+.hint { margin-top: 3rem; color: var(--faint); font-size: 0.85rem; letter-spacing: 0.08em; }
+.fine { margin-top: 2rem; font-size: 0.86rem; color: var(--faint); max-width: 34rem; }
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 0.98rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: rgba(238, 246, 241, 0.34); }
+.btn.primary { background: var(--mint); border-color: var(--mint); color: #0a2a1c; font-weight: 600; }
+.btn.primary:hover { background: #b7ecc4; }
+.btn.disabled { opacity: 0.55; cursor: default; transform: none; }
+.btn.small { min-height: 2.3rem; padding: 0 1rem; font-size: 0.9rem; }
+.btn:focus-visible, a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+
+.link { color: var(--mint); text-underline-offset: 4px; }
+
+.facts, .rivers { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.facts li { padding: 0.95rem 0; border-top: 1px solid var(--line); color: var(--dim); }
+.facts li:last-child { border-bottom: 1px solid var(--line); }
+.facts b { display: block; color: var(--ink); font-weight: 600; }
+
+.rivers li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 1.1rem;
+}
+.rivers li:last-child { border-bottom: 1px solid var(--line); }
+.rivers em { font-style: normal; color: var(--faint); font-size: 0.92rem; }
+.rivers em.soon { color: var(--mint); }
+
+/* the pretend console */
+.console {
+  position: relative;
+  margin: 1.6rem 0 12rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(6, 18, 22, 0.78);
+  backdrop-filter: blur(6px);
+  overflow: visible;
+}
+.console-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(238, 246, 241, 0.2); }
+.console-url { margin-left: 0.6rem; color: var(--faint); font: 0.78rem ui-monospace, Menlo, monospace; }
+.console-body { padding: 1.2rem 1.2rem 1.4rem; }
+.console-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.console-row small, .reveal small { display: block; color: var(--faint); font-size: 0.85rem; }
+.reveal {
+  margin-top: 1.1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(238, 246, 241, 0.06);
+  animation: rise 420ms ease both;
+}
+.reveal code {
+  display: block;
+  margin-top: 0.7rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 9px;
+  background: rgba(1, 4, 6, 0.6);
+  color: var(--moon);
+  font: 0.86rem ui-monospace, Menlo, monospace;
+  word-break: break-all;
+}
+
+.bubble {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.8rem);
+  width: min(19rem, 86vw);
+  padding: 1rem;
+  border-radius: 18px 18px 5px 18px;
+  background: #fffdf7;
+  color: #17362f;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  animation: rise 380ms cubic-bezier(.2, .85, .2, 1) both;
+  z-index: 3;
+}
+.bubble strong { display: block; font-size: 0.95rem; }
+.bubble span { display: block; margin-top: 0.25rem; color: #5d6d67; font-size: 0.85rem; line-height: 1.45; }
+.bubble-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.8rem; }
+.bubble-actions button {
+  min-height: 2.1rem;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: #c9f0d3;
+  color: #17362f;
+  font: 700 0.8rem system-ui, sans-serif;
+  text-transform: lowercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.bubble-actions button.secondary { background: transparent; color: #5d6d67; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  gap: 1.6rem;
+  padding: 2rem clamp(1.4rem, 7vw, 7rem) 3rem;
+  color: var(--faint);
+  font-size: 0.88rem;
+}
+footer a { color: var(--faint); text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+@media (max-width: 760px) {
+  #topbar nav { display: none; }
+  .panel { min-height: 92vh; padding-top: 6rem; }
+  .bubble { position: relative; right: auto; top: auto; margin: 0.8rem; width: auto; }
+  .console { margin-bottom: 2rem; }
+}
+
+/* no cursor to carry the light on touch screens; it rides with the otter instead */
+@media (pointer: coarse) {
+  .hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
