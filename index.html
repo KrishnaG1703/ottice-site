@@ -29,6 +29,7 @@
       <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></symbol>
       <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2.5v3.5M15 2.5v3.5M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></symbol>
       <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-warn-url" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
       <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.5 20h19L12 3.5Z"/><path d="M12 10v4.5M12 17.2v.3"/></symbol>
     </defs>
   </svg>
@@ -66,6 +67,7 @@
         </div>
 
         <div class="hero-demo" aria-label="interactive example: otter offers to save a password">
+          <div class="otter hero-otter" data-clip="wave" aria-hidden="true"></div>
           <div class="window">
             <div class="window-bar">
               <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -110,12 +112,13 @@
       </div>
     </section>
 
-    <!-- how it works -->
+    <!-- how it works: live demo -->
     <section class="how" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <header class="section-head">
-          <p class="eyebrow">how it works</p>
-          <h2 id="how-title">three moments. that's the whole job.</h2>
+          <p class="eyebrow">how it works · live demo</p>
+          <h2 id="how-title">three moments. try them yourself.</h2>
+          <p class="section-sub">a pretend console, the real flow. click through it, or let otter show you.</p>
         </header>
 
         <div class="how-grid">
@@ -143,41 +146,59 @@
             </li>
           </ol>
 
-          <div class="how-stage" aria-hidden="true">
-            <div class="window console" data-stage="1">
+          <div class="demo" id="demo" data-state="start">
+            <div class="window demo-window">
               <div class="window-bar">
-                <span class="lights"><i></i><i></i><i></i></span>
-                <span class="url keepcase"><svg class="ic"><use href="#i-lock"/></svg>console.example.dev/settings/keys</span>
+                <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="url demo-url keepcase" id="demo-url"><svg class="ic" aria-hidden="true"><use href="#i-lock" id="demo-url-icon"/></svg><span id="demo-url-text">console.example.dev/settings/keys</span></span>
+                <button class="demo-restart" type="button" id="demo-restart" aria-label="restart the demo">restart</button>
               </div>
-              <div class="console-body">
-                <aside class="console-side">
-                  <b>model console</b>
-                  <span>overview</span><span class="on">api keys</span><span>usage</span><span>settings</span>
-                </aside>
-                <div class="console-main">
+
+              <div class="demo-page">
+                <!-- the key console -->
+                <div class="demo-view view-console" id="view-console">
                   <div class="console-top">
-                    <div><b>api keys</b><small>create and manage keys for your projects.</small></div>
-                    <span class="fake-btn">+ create key</span>
+                    <div><b>api keys</b><small>model console · keys are shown once.</small></div>
+                    <button class="btn btn-sm btn-primary demo-create" type="button" id="demo-create">+ create key</button>
                   </div>
-                  <div class="key-card">
-                    <small>api key created · shown once</small>
-                    <code class="keepcase">sk-live-••••••••••••7Q</code>
+                  <ul class="key-rows" aria-hidden="true">
+                    <li><span>staging worker</span><code class="keepcase">sk-live-••••x2Pd</code></li>
+                    <li><span>analytics cron</span><code class="keepcase">sk-live-••••9sQe</code></li>
+                  </ul>
+                  <div class="key-card" id="demo-key-card" hidden>
+                    <small>new key · shown once</small>
+                    <code class="keepcase" id="demo-key"></code>
                     <small class="warn">copy this key now. you won't be able to see it again.</small>
                   </div>
-
-                  <div class="stage-note stage-1"><span class="pill pill-muted"><svg class="ic"><use href="#i-eye"/></svg>detected · not saved</span></div>
-                  <div class="prompt prompt-inline stage-2">
-                    <div class="prompt-head">
-                      <img src="assets/icon.png" alt="" width="28" height="28">
-                      <div><strong>something secret just surfaced.</strong><span>keep this api key safe?</span></div>
-                    </div>
-                    <div class="prompt-actions"><span class="btn btn-xs btn-mint">keep it safe</span><span class="btn btn-xs btn-quiet">not now</span></div>
-                  </div>
-                  <div class="stage-note stage-3">
-                    <span class="pill pill-mint"><svg class="ic"><use href="#i-check"/></svg>saved to encrypted notebook</span>
-                    <span class="pill pill-muted keepcase-lower"><svg class="ic"><use href="#i-globe"/></svg>locked to console.example.dev</span>
-                  </div>
                 </div>
+
+                <!-- a deploy page that asks for the key (lookalike, then real) -->
+                <div class="demo-view view-deploy" id="view-deploy" hidden>
+                  <div class="console-top"><div><b>deploy settings</b><small>paste the api key for this project.</small></div></div>
+                  <label class="field">
+                    <span class="field-label">api key</span>
+                    <span class="field-input field-focus" id="demo-field"><span class="field-value keepcase" id="demo-field-value"></span><i class="caret" aria-hidden="true"></i></span>
+                  </label>
+                  <span class="signin-btn" aria-hidden="true">save and deploy</span>
+                </div>
+
+                <!-- the otter and its bubble -->
+                <div class="buddy" id="demo-buddy">
+                  <div class="bubble" id="demo-bubble" role="status" aria-live="polite" hidden>
+                    <strong id="demo-bubble-title"></strong>
+                    <span id="demo-bubble-body"></span>
+                    <div class="bubble-actions" id="demo-bubble-actions"></div>
+                  </div>
+                  <div class="otter" id="demo-otter" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-foot">
+              <p class="demo-caption" id="demo-caption" aria-live="polite">you're on the real console. make a key to begin.</p>
+              <div class="demo-controls">
+                <span class="notebook-count" id="demo-count"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span>notebook · 0 secrets</span></span>
+                <button class="btn btn-xs btn-ghost" type="button" id="demo-play">play it for me</button>
               </div>
             </div>
           </div>
@@ -276,7 +297,7 @@
     <!-- closing -->
     <section class="manifesto" id="get" aria-labelledby="get-title">
       <div class="wrap narrow center">
-        <img class="manifesto-mark" src="assets/icon.png" alt="" width="72" height="72">
+        <img class="manifesto-otter" src="assets/otter/salute.webp" alt="" width="160" height="190" loading="lazy">
         <p class="eyebrow">a smaller kind of security tool</p>
         <h2 id="get-title">otter doesn't want to become your whole browser.</h2>
         <p class="section-sub">it wants to show up at the right moment, do one important thing well, then float quietly back into the corner.</p>
