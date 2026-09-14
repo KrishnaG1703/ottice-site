@@ -397,7 +397,7 @@ code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em
 .tested { padding: 96px 0; background: var(--cream); }
 .tested-score { display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 28px; }
 .tested-score span { padding: 8px 16px; border-radius: 999px; background: var(--mint-wash); color: var(--deep); }
-.tested-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.tested-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
 .tested-tile { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
 .tested-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .tested-top b { font-size: 1.1rem; color: var(--deep); }
@@ -410,3 +410,43 @@ code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em
 .tested-checks .ic { width: 16px; height: 16px; color: #2c7469; }
 .tested-note { max-width: 46rem; margin-top: 24px; font-size: 0.95rem; color: #5f6f69; }
 @media (max-width: 640px) { .tested { padding: 64px 0; } }
+@media (max-width: 1080px) { .tested-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- 3d otter: phones only ---------- */
+.otter-stage { display: none; }
+@media (max-width: 720px) {
+  .otter-stage { position: relative; display: block; height: 300px; margin: 18px 0 14px; border-radius: var(--radius-lg); background: radial-gradient(closest-side, var(--mint-soft), rgba(201, 240, 211, 0) 72%); touch-action: pan-y; cursor: grab; -webkit-tap-highlight-color: transparent; }
+  .otter-stage:focus-visible { outline: 3px solid rgba(44, 116, 105, 0.35); outline-offset: 4px; }
+  .otter-stage canvas { display: block; width: 100%; height: 100%; opacity: 0; transform: scale(0.92); transition: opacity 500ms var(--ease-out), transform 600ms var(--ease-out); }
+  .otter-stage.is-ready canvas { opacity: 1; transform: none; }
+  .otter-stage.no-webgl { display: none; }
+  .otter-hint { position: absolute; left: 50%; bottom: -10px; margin: 0; padding: 5px 12px; border-radius: 999px; background: rgba(255, 253, 247, 0.85); color: var(--ink-2); font-size: 0.85rem; white-space: nowrap; transform: translateX(-50%); opacity: 0; transition: opacity 400ms 600ms; }
+  .otter-stage.is-ready .otter-hint { opacity: 1; }
+  /* the 3d otter carries the hero on phones, so the closing section keeps a smaller image */
+  .tested-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .tested-tile { padding: 14px; }
+  .tested-top { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .tested-tile small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tested-tile code { margin: 4px 0 6px; font-size: 0.82rem; }
+  .tested-checks { font-size: 0.85rem; gap: 2px; padding-top: 8px; }
+  .tested-score span { font-size: 0.92rem; }
+}
+@media (max-width: 360px) {
+  .tested-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- large screens: use the room ---------- */
+@media (min-width: 721px) and (max-width: 1080px) {
+  .hero-copy, .demo { margin-inline: auto; }
+  .hero-copy { max-width: 640px; }
+}
+@media (min-width: 1700px) {
+  html { font-size: 18px; }
+  body { font-size: 18px; }
+  :root { --page: min(1380px, calc(100vw - 96px)); }
+}
+@media (min-width: 2300px) {
+  html { font-size: 20px; }
+  body { font-size: 20px; }
+  :root { --page: min(1560px, calc(100vw - 160px)); }
+}
