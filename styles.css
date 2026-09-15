@@ -479,3 +479,10 @@ code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92em
 .demo-kicker { justify-content: center; text-align: left; }
 .stepper, .demo-foot { justify-content: center; }
 .demo-caption { flex: 1 1 100%; justify-content: center; text-align: center; }
+
+/* verification note in the security band */
+.notice.proof { background: rgba(159, 226, 176, 0.14); border: 1px solid rgba(159, 226, 176, 0.3); color: var(--on-deep); }
+.notice.proof > .ic { color: var(--mint); }
+.notice.proof p { color: var(--on-deep-2); }
+.notice.proof .link { color: var(--mint); }
+.badge { border-color: rgba(44, 116, 105, 0.25); background: var(--mint-wash); color: #2c7469; }

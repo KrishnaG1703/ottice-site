@@ -12,7 +12,7 @@
   <link rel="icon" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/icon.png">
   <link rel="preload" href="assets/fonts/Lumiare.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20260915f">
+  <link rel="stylesheet" href="styles.css?v=20260915g">
 </head>
 <body>
   <a class="skip" href="#main">skip to content</a>
@@ -129,7 +129,7 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="badge"><span class="dot" aria-hidden="true"></span>early preview · not for real secrets yet</p>
+          <p class="badge"><span class="dot" aria-hidden="true"></span>coming soon to chrome</p>
           <h1 id="hero-title">your passwords and api keys. <em>kept close.</em></h1>
           <p class="lede">otter asks before saving your credentials to an encrypted browser vault, then helps fill them on the matching site.</p>
           <div class="actions">
@@ -324,11 +324,11 @@
           </article>
         </div>
 
-        <div class="notice" role="note">
-          <svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg>
+        <div class="notice proof" role="note">
+          <svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>
           <div>
-            <strong>this is a development preview.</strong>
-            <p>it hasn't had an independent security audit yet. don't store cryptocurrency seeds, production api keys or valuable credentials.</p>
+            <strong>how we check it.</strong>
+            <p>every change runs 83 automated tests, including attack tests and thousands of fuzzed hostile messages. the cryptography is checked against an independent implementation, and detection is tested on key pages from 10 providers.</p>
           </div>
           <a class="link" href="https://krishnag1703.github.io/ottice-privacy/">privacy policy <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
@@ -471,11 +471,11 @@
           </details>
           <details>
             <summary>what if i forget my passphrase?</summary>
-            <p>the vault can't be opened, by you or by us. there is no recovery key in this preview, which is part of why it isn't meant for important credentials yet.</p>
+            <p>the vault can't be opened, by you or by us. there's no recovery key by design, so keep your passphrase somewhere safe.</p>
           </details>
           <details>
             <summary>what can't it do yet?</summary>
-            <p>it saves logins and api keys only, with no sync, import, export or sharing. it hasn't had an independent audit. and like all autofill, a filled value lives in that site's page, so a site with a script-injection bug could read what you fill there.</p>
+            <p>it saves logins and api keys only, with no sync, import, export or sharing. an independent security audit is planned before version 1.0. and like all autofill, a filled value lives in that site's page, so a site with a script-injection bug could read what you fill there.</p>
           </details>
           <details>
             <summary>does otter see everything i type?</summary>
@@ -506,7 +506,7 @@
   <footer class="footer">
     <div class="wrap footer-inner">
       <a class="brand" href="#top"><img src="assets/logo-mark.webp" alt="" width="28" height="28">otter vault</a>
-      <span class="footer-note">development preview · not independently audited yet</span>
+      <span class="footer-note">coming soon to the chrome web store</span>
       <nav aria-label="footer">
         <a href="https://krishnag1703.github.io/ottice-privacy/">privacy</a>
         <a href="mailto:krishna091718@gmail.com">contact</a>
@@ -519,11 +519,11 @@
     // only phones download three.js and the model
     (() => {
       const phone = matchMedia('(max-width: 720px)');
-      const load = () => { if (phone.matches && !window.__otter3d) { window.__otter3d = true; import('./otter3d.js?v=20260915f'); } };
+      const load = () => { if (phone.matches && !window.__otter3d) { window.__otter3d = true; import('./otter3d.js?v=20260915g'); } };
       load();
       phone.addEventListener('change', load);
     })();
   </script>
-  <script src="main.js?v=20260915f" defer></script>
+  <script src="main.js?v=20260915g" defer></script>
 </body>
 </html>
