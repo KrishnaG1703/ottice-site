@@ -6,7 +6,7 @@
 set -e
 cd "$(dirname "$0")"
 DIST=$(mktemp -d)
-for f in index.html classic.html social.css social.js styles.css main.js otter3d.js; do cp "$f" "$DIST"/; done
+for f in index.html classic.html support.html social.css social.js styles.css main.js otter3d.js; do cp "$f" "$DIST"/; done
 cp -R assets vendor .well-known "$DIST"/
 cp worker/index.js "$DIST/worker.js"
 find "$DIST" -name '.DS_Store' -delete
