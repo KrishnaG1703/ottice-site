@@ -22,6 +22,7 @@
   --deep: #17362f;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { color-scheme: dark; }
 :root[data-theme='light'] { color-scheme: light; }
 body {
@@ -249,7 +250,7 @@ dialog::backdrop { background: rgba(0, 0, 0, .74); backdrop-filter: blur(3px); }
 .author-composer > div { flex: 1; min-width: 0; }
 .author-composer textarea {
   width: 100%; min-height: 56px; max-height: 200px; resize: none; padding: 8px 2px;
-  border: 0; background: none; color: inherit; font: 19px/1.4 inherit;
+  border: 0; background: none; color: inherit; font-size: 19px; line-height: 1.4; font-family: inherit;
 }
 .author-composer textarea:focus { outline: none; }
 .author-composer textarea::placeholder { color: var(--muted); }

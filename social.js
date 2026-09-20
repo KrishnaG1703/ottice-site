@@ -226,7 +226,7 @@
   }
 
   /* ---------- posting an update ---------- */
-  $('#author-form').addEventListener('submit', async event => {
+  $('#author-composer').addEventListener('submit', async event => {
     event.preventDefault();
     const box = $('#author-body');
     const text = box.value.trim();
