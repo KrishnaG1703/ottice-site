@@ -67,9 +67,23 @@
   let token = '';
   try { token = localStorage.getItem('otter-author') || ''; } catch {}
   const composer = $('#author-composer');
-  const setAuthor = on => {
-    document.body.classList.toggle('is-author', on);
-    composer.hidden = !on;
+  const preview = $('#visitor-bar');
+  // "View as visitor" hides every author control for this tab without giving up the token
+  let previewing = false;
+  try { previewing = sessionStorage.getItem('otter-preview') === '1'; } catch {}
+  let isAuthor = false;
+  const paint = () => {
+    const showAuthor = isAuthor && !previewing;
+    document.body.classList.toggle('is-author', showAuthor);
+    composer.hidden = !showAuthor;
+    preview.hidden = !(isAuthor && previewing);
+  };
+  const setAuthor = on => { isAuthor = on; paint(); };
+  const setPreview = on => {
+    previewing = on;
+    try { on ? sessionStorage.setItem('otter-preview', '1') : sessionStorage.removeItem('otter-preview'); } catch {}
+    paint();
+    load();
   };
   async function checkAuthor() {
     if (!token) { setAuthor(false); return; }
@@ -93,6 +107,8 @@
   addEventListener('keydown', event => {
     if (event.key === 'n' && (event.metaKey || event.ctrlKey) && event.shiftKey) { event.preventDefault(); askForToken(); }
   });
+  $('#author-preview').addEventListener('click', () => setPreview(true));
+  $('#visitor-exit').addEventListener('click', () => setPreview(false));
   $('#author-signout').addEventListener('click', () => {
     token = '';
     try { localStorage.removeItem('otter-author'); } catch {}

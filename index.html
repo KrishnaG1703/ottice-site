@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png">
-<link rel="stylesheet" href="social.css?v=5">
+<link rel="stylesheet" href="social.css?v=6">
 <script>
   try {
     const saved = localStorage.getItem('otter-theme');
@@ -30,6 +30,11 @@
     <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 15.2A9 9 0 0 1 8.8 3.3 9 9 0 1 0 20.7 15.2Z"/></svg>
   </button>
 </header>
+
+<div class="visitor-bar" id="visitor-bar" hidden>
+  <span>Viewing as a visitor</span>
+  <button type="button" id="visitor-exit">Back to author mode</button>
+</div>
 
 <div class="shell">
   <aside class="rail" aria-label="Primary">
@@ -76,6 +81,7 @@
           <label class="sr-only" for="author-body">Post an update</label>
           <textarea id="author-body" rows="2" maxlength="600" placeholder="What shipped today?"></textarea>
           <div class="author-row">
+            <button type="button" id="author-preview" class="link-button">View as visitor</button>
             <button type="button" id="author-signout" class="link-button">Sign out</button>
             <button type="submit" id="author-post">Post update</button>
           </div>
@@ -217,6 +223,6 @@
   </div>
 </dialog>
 
-<script src="social.js?v=5"></script>
+<script src="social.js?v=6"></script>
 </body>
 </html>
